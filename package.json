@@ -1,0 +1,23 @@
+{
+  "name": "swp",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/etefaghian/swp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/etefaghian/swp/issues"
+  },
+  "homepage": "https://github.com/etefaghian/swp#readme",
+  "dependencies": {
+    "to-aop": "^0.5.4"
+  }
+}
