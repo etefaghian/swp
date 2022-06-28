@@ -1,4 +1,5 @@
 import { aop, hookName, createHook, unAop } from "to-aop";
+import { logger } from "./logger.js";
 
 export class MMU {
   memory = [];
@@ -63,7 +64,7 @@ const hook = createHook(
   "requestMemory",
   ({ target, object, property, context, args, payload, meta }) => {
     //call your own hook
-    console.log(property);
+    logger("ser1", property);
   }
 );
 
