@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/etefaghian/swp#readme",
   "dependencies": {
+    "@aspectjs/core": "^0.1.4",
+    "meld": "^1.3.2",
+    "reflect-metadata": "^0.1.13",
     "to-aop": "^0.5.4"
   }
 }

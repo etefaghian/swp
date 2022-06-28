@@ -1,5 +1,6 @@
 import { aop, hookName, createHook, unAop } from "to-aop";
 import { logger } from "./logger.js";
+import meld from "meld";
 
 export class MMU {
   memory = [];
@@ -59,14 +60,13 @@ const throwError = (message) => {
   throw new Error(message);
 };
 
-const hook = createHook(
-  hookName.beforeMethod,
-  "requestMemory",
-  ({ target, object, property, context, args, payload, meta }) => {
-    //call your own hook
-    logger("ser1", property);
-  }
-);
-
 const mmu = new MMU();
-export const InstrumentedMMU = aop(mmu, hook); // bind hook to instance
+
+for (const item of Object.getOwnPropertyNames(MMU.prototype)) {
+  if (item === "constructor") {
+    continue;
+  }
+  meld.before(mmu, item, (data) => {});
+}
+
+export const InstrumentedMMU = mmu;
