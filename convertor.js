@@ -11,5 +11,5 @@ export const convertor = (service, mapping) => {
     }
   }
 
-  console.log(modifiedFile);
+  writeFileSync("./output/" + service + ".txt", modifiedFile);
 };

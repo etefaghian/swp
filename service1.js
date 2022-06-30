@@ -2,7 +2,7 @@ import { aop, hookName, createHook, unAop } from "to-aop";
 import { logger } from "./logger.js";
 import meld from "meld";
 
-export class MMU {
+export class Service1 {
   memory = [];
   constructor() {
     this.memory = Array(100).fill("empty");
@@ -60,13 +60,15 @@ const throwError = (message) => {
   throw new Error(message);
 };
 
-const mmu = new MMU();
+const service1 = new Service1();
 
-for (const item of Object.getOwnPropertyNames(MMU.prototype)) {
+for (const item of Object.getOwnPropertyNames(Service1.prototype)) {
   if (item === "constructor") {
     continue;
   }
-  meld.before(mmu, item, (data) => {});
+  meld.before(service1, item, (data) => {
+    logger("service1", item);
+  });
 }
 
-export const InstrumentedMMU = mmu;
+export const InstrumentedService1 = service1;
