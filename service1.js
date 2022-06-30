@@ -15,16 +15,33 @@ export class Service1 {
       this.memory[i] = "corrupt";
     }
   }
-  requestMemory(address) {
-    //check address in correct range or not
-    this.checkAddressInSuitableRange(address);
-    this.checkInCorrectAddress(address);
-    this.checkPermissions(address);
 
-    //read data from memory
-    const data = this.readDataFromMem(address);
-    this.checkIsDataAvailable(data);
-    this.checkCorruptedStoredData(data);
+  run() {
+    const runs = Array.from({ length: 1000 }, () => {
+      const num = Math.floor(Math.random() * 200);
+      return num;
+    });
+
+    for (let index = 0; index < runs.length; index++) {
+      const run = runs[index];
+      this.requestMemory(run);
+    }
+  }
+
+  requestMemory(address) {
+    try {
+      //check address in correct range or not
+      this.checkAddressInSuitableRange(address);
+      this.checkInCorrectAddress(address);
+      this.checkPermissions(address);
+
+      //read data from memory
+      const data = this.readDataFromMem(address);
+      this.checkIsDataAvailable(data);
+      this.checkCorruptedStoredData(data);
+    } catch (error) {
+      this.generatePageFault();
+    }
   }
 
   checkAddressInSuitableRange(address) {

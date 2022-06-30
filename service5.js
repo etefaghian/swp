@@ -3,7 +3,6 @@ import { logger } from "./logger.js";
 import meld from "meld";
 
 export class Service5 {
-  memory = [];
   constructor() {}
 
   run() {
