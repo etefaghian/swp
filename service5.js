@@ -29,7 +29,7 @@ export class Service5 {
     return run.operation;
   }
 
-  decode() {
+  decode(operation) {
     return "instruction is decoded and needed register is read";
   }
   execute() {
