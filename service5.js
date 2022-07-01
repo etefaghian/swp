@@ -29,7 +29,8 @@ export class Service5 {
   }
 
   decode(operation) {
-    return "instruction is decoded and needed register is read";
+    "instruction is decoded and needed register is read";
+    return operation;
   }
   execute() {
     return "instruction is executed";
@@ -53,11 +54,17 @@ for (const item of Object.getOwnPropertyNames(Service5.prototype)) {
     logger("service5", item);
   });
 }
+meld.after(service5, "decode", (operation) => {
+  const opcode = operation.slice(0, 3);
+  const type = opcode === "111" || opcode === "011" ? "invalid" : "valid";
+  logger("service5", type);
+});
+
 export const InstrumentedService5 = service5;
 
-const characters = "123456789";
+const characters = "01";
 function generateString(length) {
-  let result = " ";
+  let result = "";
   const charactersLength = characters.length;
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
