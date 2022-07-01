@@ -51,6 +51,6 @@ for (const item of Object.getOwnPropertyNames(Service4.prototype)) {
 }
 
 meld.after(service4, "transformDataFromRegisterToMemory", (data) => {
-  logger(memory[data.mar] === data.mdr);
+  logger("service4", memory[data.mar] === data.mdr);
 });
 export const InstrumentedService4 = service4;
