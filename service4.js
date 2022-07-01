@@ -2,9 +2,8 @@ import { logger } from "./logger.js";
 import { throwError } from "./throwError.js";
 
 import meld from "meld";
-
+const memory = Array(1000).fill("empty");
 export class Service4 {
-  memory = [];
   constructor() {}
 
   run() {
@@ -27,7 +26,8 @@ export class Service4 {
   }
 
   transformDataFromRegisterToMemory(mar, mdr) {
-    this.memory[mar] = mdr;
+    memory[mar] = mdr;
+    return { mar, mdr };
   }
 
   readMar(run) {
@@ -49,4 +49,8 @@ for (const item of Object.getOwnPropertyNames(Service4.prototype)) {
     logger("service4", item);
   });
 }
+
+meld.after(service4, "transformDataFromRegisterToMemory", (data) => {
+  logger(memory[data.mar] === data.mdr);
+});
 export const InstrumentedService4 = service4;
