@@ -1,6 +1,6 @@
 import { convertor } from "./convertor.js";
 import { InstrumentedService1, service1Verifier } from "./service1.js";
-import { InstrumentedService3 } from "./service3.js";
+import { InstrumentedService3, service3Verifier } from "./service3.js";
 import { InstrumentedService4 } from "./service4.js";
 import { InstrumentedService5 } from "./service5.js";
 
@@ -21,3 +21,15 @@ convertor("service1", {
   generatePageFault: "p4",
 });
 service1Verifier();
+
+convertor("service3", {
+  handleRun: "q1",
+  generateException: "q3",
+  ",goToAbortMode": "",
+  generateSuperviseModeInterrupt: "q4",
+  ",interruptHandler": "",
+  goToSuperviseMode: "q5",
+  restart: "q2",
+});
+service1Verifier();
+service3Verifier();

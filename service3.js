@@ -1,6 +1,6 @@
-import { aop, hookName, createHook, unAop } from "to-aop";
 import { logger } from "./logger.js";
 import { throwError } from "./throwError.js";
+import { readFileSync, writeFileSync } from "fs";
 
 import meld from "meld";
 
@@ -19,7 +19,7 @@ export class Service3 {
     }
   }
 
-  handleRun = (run) => {
+  handleRun(run) {
     try {
       if (run === "e") {
         try {
@@ -29,20 +29,26 @@ export class Service3 {
         }
       }
       if (run === "r") {
-        this.generateSuperviseModeInterrupt();
+        this.restart();
       }
     } catch (interrupt) {
       this.interruptHandler(interrupt.message);
     }
-  };
+  }
+
+  restart() {
+    this.generateSuperviseModeInterrupt();
+  }
+
+  normalRun() {}
 
   interruptHandler(type) {
     if (type === "SuperviseInterrupt") {
-      this.goToSuperviseInterrupt();
+      Math.random() < 0.8 && this.goToSuperviseMode();
     }
   }
 
-  goToSuperviseInterrupt() {
+  goToSuperviseMode() {
     return "set register to enter to supervise mode and enter to supervise mode";
   }
 
@@ -70,3 +76,22 @@ for (const item of Object.getOwnPropertyNames(Service3.prototype)) {
   });
 }
 export const InstrumentedService3 = service3;
+
+export const service3Verifier = () => {
+  const file = String(readFileSync("./output/" + "service3-convert" + ".txt"));
+
+  const fileArray = file.split(",");
+
+  for (let i = 0; i < fileArray.length; i++) {
+    const element = fileArray[i];
+    if (
+      ((element === "q1" && fileArray[i + 1] === "q3") || element === "q2") &&
+      fileArray[i + 1] === "q4" &&
+      fileArray[i + 2] !== "q5"
+    ) {
+      logger("service3-res", false);
+    } else {
+      logger("service3-res", true);
+    }
+  }
+};
