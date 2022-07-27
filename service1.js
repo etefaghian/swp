@@ -1,4 +1,4 @@
-import { aop, hookName, createHook, unAop } from "to-aop";
+import { readFileSync, writeFileSync } from "fs";
 import { logger } from "./logger.js";
 import meld from "meld";
 
@@ -40,28 +40,30 @@ export class Service1 {
       this.checkIsDataAvailable(data);
       this.checkCorruptedStoredData(data);
     } catch (error) {
-      this.generatePageFault();
+      Math.random() < 0.8 && this.generatePageFault();
     }
   }
 
   checkAddressInSuitableRange(address) {
-    return (address > 0 && address < this.memory.length) || throwError("range");
+    return (
+      (address > 0 && address < this.memory.length) || this.throwError("range")
+    );
   }
 
   checkPermissions(address) {
-    return address >= 5 || throwError("per");
+    return address >= 5 || this.throwError("per");
   }
 
   checkInCorrectAddress(address) {
-    return typeof address === "number" || throwError("type");
+    return typeof address === "number" || this.throwError("type");
   }
 
   checkCorruptedStoredData(data) {
-    return data !== "corrupt" || throwError("cor");
+    return data !== "corrupt" || this.throwError("cor");
   }
 
   checkIsDataAvailable(data) {
-    return data !== "empty" || throwError("emp");
+    return data !== "empty" || this.throwError("emp");
   }
 
   readDataFromMem(address) {
@@ -71,11 +73,11 @@ export class Service1 {
   generatePageFault(address) {
     return "page-fault";
   }
-}
 
-const throwError = (message) => {
-  throw new Error(message);
-};
+  throwError(message) {
+    throw new Error(message);
+  }
+}
 
 const service1 = new Service1();
 
@@ -89,3 +91,18 @@ for (const item of Object.getOwnPropertyNames(Service1.prototype)) {
 }
 
 export const InstrumentedService1 = service1;
+
+export const service1Verifier = () => {
+  const file = String(readFileSync("./output/" + "service1-convert" + ".txt"));
+
+  const fileArray = file.split(",");
+
+  for (let i = 0; i < fileArray.length; i++) {
+    const element = fileArray[i];
+    if (element === "p3" && fileArray[i + 1] !== "p4") {
+      logger("service1-res", false);
+    } else {
+      logger("service1-res", true);
+    }
+  }
+};
