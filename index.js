@@ -2,7 +2,7 @@ import { convertor } from "./convertor.js";
 import { InstrumentedService1, service1Verifier } from "./service1.js";
 import { InstrumentedService3, service3Verifier } from "./service3.js";
 import { InstrumentedService4, service4Verifier } from "./service4.js";
-import { InstrumentedService5 } from "./service5.js";
+import { InstrumentedService5, service5Verifier } from "./service5.js";
 
 InstrumentedService3.run();
 InstrumentedService4.run();
@@ -37,6 +37,14 @@ convertor("service4", {
   true: "r2",
   "false,": "",
 });
+convertor("service5", {
+  fetch: "t1",
+  decode: "t2",
+  ",invalid": "",
+  valid: "t4",
+  execute: "t3",
+});
 service1Verifier();
 service3Verifier();
 service4Verifier();
+service5Verifier();

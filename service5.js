@@ -1,4 +1,5 @@
 import { logger } from "./logger.js";
+import { readFileSync, writeFileSync } from "fs";
 
 import meld from "meld";
 
@@ -63,3 +64,22 @@ function generateString(length) {
 
   return result;
 }
+
+export const service5Verifier = () => {
+  const file = String(readFileSync("./output/" + "service5-convert" + ".txt"));
+
+  const fileArray = file.split(",");
+
+  for (let i = 0; i < fileArray.length; i++) {
+    const element = fileArray[i];
+    if (
+      element === "t1" &&
+      fileArray[i + 1] === "t2" &&
+      (fileArray[i + 1] === "t2" || fileArray[i + 1] === "t4")
+    ) {
+      logger("service5-res", false);
+    } else {
+      logger("service5-res", true);
+    }
+  }
+};
