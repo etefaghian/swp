@@ -19,8 +19,6 @@ export class Service5 {
       const operation = this.fetch(run);
       this.decode(operation);
       this.execute();
-      this.memory();
-      this.writeBack();
     }
   }
 
@@ -34,13 +32,6 @@ export class Service5 {
   }
   execute() {
     return "instruction is executed";
-  }
-
-  memory() {
-    return "interaction with memory is completed";
-  }
-  writeBack() {
-    return "all register is updated";
   }
 }
 
